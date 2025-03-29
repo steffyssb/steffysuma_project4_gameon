@@ -53,7 +53,7 @@
             <div class="content">
                 <span class="close"></span>
                 <div class="modal-body">
-                    <form name="reserve" action="index.html" method="get" onsubmit="return validate(event);">
+                    <form novalidate name="reserve" action="index.html" method="get" onsubmit="return validate(event);">
                         <div class="formData">
                             <label>Prénom</label>
                             <input class="text-control" type="text" id="first" name="first" />
@@ -64,7 +64,7 @@
                         </div>
                         <div class="formData">
                             <label>E-mail</label>
-                            <input class="text-control" type="text" id="email" name="email" />
+                            <input class="text-control" type="email" id="email" name="email" />
                         </div>
                         <div class="formData">
                             <label>Date de naissance</label>
