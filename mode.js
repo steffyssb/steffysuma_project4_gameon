@@ -11,12 +11,12 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closebtn = document.querySelectorAll(".content .close");
-const closePopupbtn= document.getElementById("closePopup");
+const closePopupbtn = document.getElementById("closePopup");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 closebtn.forEach((btn) => btn.addEventListener("click", closeModal));
-closePopupbtn.addEventListener("click",closeModal);
+closePopupbtn.addEventListener("click", closeModal);
 
 // launch modal form
 function launchModal() {
@@ -46,8 +46,16 @@ function validate(event) {
     if (!error || !error.classList.contains("error-message")) {
       error = document.createElement("div");
       error.classList.add("error-message");
+      //Add error message styles directly
+      error.style.color = "red";
+      error.style.backgroundColor = "#ffe6e6";
+      error.style.fontSize = "16px";
+      const parent = input.parentNode;
+      parent.appendChild(error);
     }
     error.textContent = message;
+  //Add red border to the input field 
+  input.classList.add("error-border");
     isValid = false;
   }
 
@@ -56,6 +64,8 @@ function validate(event) {
     if (error && error.classList.contains("error-message")) {
       error.remove();
     }
+  //Remove error border color
+  input.classList.remove("error-border");
     input.style.borderColor = "";
   }
   // Validate First Name
@@ -75,6 +85,7 @@ function validate(event) {
 
   // Validate Email
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  console.log(!emailPattern.test(email.value))
   if (!emailPattern.test(email.value)) {
     showError(email, "Veuillez entrer une adresse e-mail valide.");
   } else {
