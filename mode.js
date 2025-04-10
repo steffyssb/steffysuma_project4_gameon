@@ -46,7 +46,6 @@ function validate(event) {
     if (!error || !error.classList.contains("error-message")) {
       error = document.createElement("div");
       error.classList.add("error-message");
-      //Add error message styles directly
       const parent = input.parentNode;
       parent.appendChild(error);
     }
