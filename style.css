@@ -515,9 +515,10 @@ select.error-border {
     border: 2px solid red !important;
     outline: none;
 }
-
-
-
+.error-message {
+  color: red;
+  font-size: 16px;
+}
 .copyrights {
   color: #fe142f;
   padding: 0;

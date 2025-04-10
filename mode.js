@@ -47,9 +47,6 @@ function validate(event) {
       error = document.createElement("div");
       error.classList.add("error-message");
       //Add error message styles directly
-      error.style.color = "red";
-      error.style.backgroundColor = "#ffe6e6";
-      error.style.fontSize = "16px";
       const parent = input.parentNode;
       parent.appendChild(error);
     }
