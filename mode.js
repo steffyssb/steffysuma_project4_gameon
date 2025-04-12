@@ -26,7 +26,7 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 function validate(event) {
-  event.preventDefault();//prevents default from submission
+  event.preventDefault();//empêche la soumission par défaut
   let isValid = true;
 
   // Get form elements
@@ -35,8 +35,10 @@ function validate(event) {
   const email = document.getElementById("email");
   const birthdate = document.getElementById("birthdate");
   const quantity = document.getElementById("quantity");
+  const locations = document.querySelectorAll('input[name="location"]');
+const locationContainer = document.getElementById("location-container");
   const terms = document.getElementById("terms");
-  const location = document.querySelector("input[name='location']:checked");
+  const termsContainer= document.getElementById("terms-container");
   const popupcontent = document.getElementById("popup-content");
   const closePopup = document.getElementById("closePopup");
 
@@ -46,12 +48,11 @@ function validate(event) {
     if (!error || !error.classList.contains("error-message")) {
       error = document.createElement("div");
       error.classList.add("error-message");
-      //Add error message styles directly
       const parent = input.parentNode;
       parent.appendChild(error);
     }
     error.textContent = message;
-  //Add red border to the input field 
+  //Ajouter une bordure rouge au champ de saisie
   input.classList.add("error-border");
     isValid = false;
   }
@@ -61,10 +62,11 @@ function validate(event) {
     if (error && error.classList.contains("error-message")) {
       error.remove();
     }
-  //Remove error border color
+  //Supprimer la couleur de la bordure d'erreur
   input.classList.remove("error-border");
     input.style.borderColor = "";
   }
+
   // Validate First Name
   if (firstName.value.trim().length < 2) {
     showError(firstName, "Veuillez entrer 2 caractères ou plus pour le champ du prénom.");
@@ -78,7 +80,6 @@ function validate(event) {
   } else {
     clearError(lastName);
   }
-
 
   // Validate Email
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -96,24 +97,56 @@ function validate(event) {
     clearError(birthdate);
   }
 
-  // Validate Quantity (must be a number)
-  if (isNaN(quantity.value) || quantity.value === "") {
-    showError(quantity, "Veuillez entrer un nombre valide.");
-  } else {
-    clearError(quantity);
-  }
+ // Validate Quantity (must be a number between 0 and 99)
+if (
+  quantity.value.trim() === "" ||
+  isNaN(quantity.value) ||
+  quantity.value < 0 ||
+  quantity.value > 99
+) {
+  showError(quantity, "Veuillez entrer un nombre entre 0 et 99.");
+  isValid = false;
+} else {
+  clearError(quantity);
+}
+
 
   // Validate Radio Selection (Location)
-  if (!location) {
-    showError(quantity, "Vous devez choisir une option.");
-  }
-
-  // Validate Terms and Conditions
-  if (!terms.checked) {
-    showError(terms, "Vous devez vérifier que vous acceptez les termes et conditions.");
+  
+  const oneChecked = Array.from(locations).some(radio => radio.checked);
+  
+  if (!oneChecked) {
+    let error = locationContainer.querySelector(".error-message");
+    if (!error) {
+      error = document.createElement("div");
+      error.classList.add("error-message");
+      locationContainer.appendChild(error);
+    }
+    error.textContent = "Veuillez sélectionner un lieu.";
+    isValid = false;
   } else {
-    clearError(terms);
+    const error = locationContainer.querySelector(".error-message");
+    if (error) error.remove();
   }
+  
+  // Validate Terms and Conditions 
+  if (!terms.checked) {
+    let error = termsContainer.querySelector(".error-message");
+    if (!error) {
+      error = document.createElement("div");
+      error.classList.add("error-message");
+      // Insert it right after the label
+      const label = termsContainer.querySelector("label");
+      label.insertAdjacentElement("afterend", error);
+    }
+    error.textContent = "Vous devez accepter les conditions.";
+    isValid = false;
+  } else {
+    const error = termsContainer.querySelector(".error-message");
+    if (error) error.remove();
+  }
+  
+  
 
   // If all validations pass
   if (isValid) {
@@ -122,6 +155,6 @@ function validate(event) {
 
   }
 
-  return isValid; // Prevents form submission if false
+  return isValid; // Empêche la soumission du formulaire si la valeur est fausse
 }
 

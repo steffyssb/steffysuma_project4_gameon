@@ -484,7 +484,7 @@ input[data-error]::after {
 }
 
 .hero-text {
-  width: 146%;
+  width: 128%;
   font-weight: normal;
   margin-top: 57px;
   padding: 0;
@@ -595,7 +595,7 @@ align-items: center;
   }
 
   .hero-text {
-    width: unset;
+    width: 83%;
     font-size: 1.5rem;
   }
 
