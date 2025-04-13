@@ -614,6 +614,10 @@ align-items: center;
     margin-top: 50px;
     text-align: center;
   }
+  
+#popup-content{
+  width: fit-content;
+}
 }
 
 @keyframes modalopen {
